@@ -16,6 +16,9 @@ def get_retriever(retriever):
 
     """
     match retriever:
+        case "arxiv":
+            from gpt_researcher.retrievers import arXivSearch
+            retriever = arXivSearch
         case "tavily":
             from gpt_researcher.retrievers import TavilySearch
             retriever = TavilySearch
