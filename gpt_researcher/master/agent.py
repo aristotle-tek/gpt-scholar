@@ -119,8 +119,15 @@ class GPTResearcher:
         # Get Urls
         retriever = self.retriever(sub_query)
         search_results = retriever.search(max_results=self.cfg.max_search_results_per_query)
-        new_search_urls = await self.get_new_urls([url.get("href") for url in search_results])
+        
 
+        # if using arxiv, scraping process simply duplicates what has already been done in retriever (ie the orig search)
+        if self.retriever == 'arxiv': # 'arXivSearch'
+            print("re-using abstracts from original arXiv search.")
+            abstracts = [res.get("body") for url in search_results]
+            return abstracts
+
+        new_search_urls = await self.get_new_urls([url.get("href") for url in search_results])
         # Scrape Urls
         # await stream_output("logs", f"📝Scraping urls {new_search_urls}...\n", self.websocket)
         await stream_output("logs", f"🤔Researching for relevant information...\n", self.websocket)

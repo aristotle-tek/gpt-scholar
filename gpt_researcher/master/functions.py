@@ -199,7 +199,7 @@ async def summarize_url(query, raw_data, agent_role_prompt, cfg):
 
 
 
-async def generate_report(query, context, agent_role_prompt, report_type, websocket, cfg):
+async def generate_report(query, context, agent_role_prompt, report_type, websocket, cfg, log_file='temp_log_file.txt'):
     """
     generates the final report
     Args:
@@ -216,6 +216,17 @@ async def generate_report(query, context, agent_role_prompt, report_type, websoc
     """
     generate_prompt = get_report_by_type(report_type)
     report = ""
+
+    # add log of context
+    try:
+        with open(log_file, 'w') as file:
+            json.dump(context, file, indent=4)
+        #with open(log_file, 'w') as file:
+        #    file.write(context)
+    except Exception as e:
+        print(f"Error writing context to file: {e}")
+
+
     try:
         report = await create_chat_completion(
             model=cfg.smart_llm_model,

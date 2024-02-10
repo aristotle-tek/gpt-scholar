@@ -7,9 +7,12 @@ def generate_search_queries_prompt(question, max_iterations=3):
     Returns: str: The search queries prompt for the given question
     """
 
-    return f'Write {max_iterations} google search queries to search online that form an objective opinion from the following: "{question}"' \
-           f'Use the current date if needed: {datetime.now().strftime("%B %d, %Y")}.\n' \
+    return f'Write {max_iterations} search queries to search relevant papers on arXiv to get diverse perspectives and deep insights for the following topic: "{question}"' \
            f'You must respond with a list of strings in the following format: ["query 1", "query 2", "query 3"].'
+
+    # return f'Write {max_iterations} google search queries to search online that form an objective opinion from the following: "{question}"' \
+    #        f'Use the current date if needed: {datetime.now().strftime("%B %d, %Y")}.\n' \
+    #        f'You must respond with a list of strings in the following format: ["query 1", "query 2", "query 3"].'
 
 
 def generate_report_prompt(question, context, report_format="apa", total_words=1000):
